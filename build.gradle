@@ -1,0 +1,156 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext {
+        appcompat_version = '1.3.0'
+        objectbox_version = '3.1.0'
+        kotlin_version = '1.6.10'
+        core_ktx_version = '1.6.0'
+    }
+
+    repositories {
+        mavenCentral()
+        google()
+        maven { url 'https://jitpack.io' }
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.1.3'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        //classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+        //  classpath 'com.antfortune.freeline:gradle:0.8.4'
+    }
+}
+
+
+allprojects {
+//    repositories {
+//        flatDir {
+//            dirs 'libs'
+//        }
+//    }
+
+
+    repositories {
+        //maven { url 'http://raw.github.com/saki4510t/libcommon/master/repository/' }
+
+        maven { url 'https://jitpack.io' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }// 阿里云maven镜像
+        maven { url 'https://artifactory.gz.cvte.cn/artifactory/SR_maven_releases_local/' }
+        maven { url 'https://mvn.gz.cvte.cn/nexus/content/repositories/releases/' }
+        maven { url 'https://mvn.gz.cvte.cn/nexus/content/repositories/snapshots/' }
+        maven { url 'https://artifactory.gz.cvte.cn/artifactory/mvn-snapshots' }
+        maven { url 'https://artifactory.gz.cvte.cn/artifactory/mvn-releases' }
+        maven { url "https://mvn.gz.cvte.cn/nexus/content/repositories/android_snapshots/" }
+        maven { url "https://mvn.gz.cvte.cn/nexus/content/repositories/android_releases/" }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url "http://objectbox.net/beta-repo/" }
+        maven { url 'https://maven.google.com' }
+        mavenLocal()
+        mavenCentral()
+        google()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+def genVersionName() {
+    String versionName = System.getenv("MH_VERSION_NAME")
+    if (versionName == null || versionName.isEmpty()) {
+        versionName = "U." + MAJOR_VERSION + "." + MINOR_VERSION
+    }
+    println "versionName = ${versionName}"
+    return versionName
+}
+
+def genVersionCode() {
+    String strVersionCode = System.getenv("MH_VERSION_CODE")
+    int versionCode = 100000000
+    if (strVersionCode != null && !strVersionCode.isEmpty()) {
+        versionCode = Integer.valueOf(strVersionCode.trim())
+    }
+    println "versionCode = ${versionCode}"
+    return versionCode
+}
+
+int getHeadVersionCode(File projectDir) {
+    checkProjectDir(projectDir)
+
+    int patchVersion = getHeadPatchVersion(projectDir)
+    println "patchVersion ${patchVersion}"
+    if (patchVersion > 0) {
+        int majorVersion = Integer.valueOf(MAJOR_VERSION.trim())
+        int minorVersion = Integer.valueOf(MINOR_VERSION.trim())
+        return 100000 * majorVersion + 1000 * minorVersion + patchVersion
+    } else {
+        return -1
+    }
+}
+
+private void checkProjectDir(File projectDir) {
+    if (!isValidGitDir(projectDir)) {
+        throw new IllegalArgumentException("Not a valid git dir-->${projectDir.getAbsoluteFile()}")
+    }
+}
+
+boolean isValidGitDir(File dir) {
+    if (dir != null && dir.isDirectory()) {
+        return new File(dir, ".git").exists()
+    } else {
+        return false
+    }
+}
+
+int getHeadPatchVersion(File projectDir) {
+    checkProjectDir(projectDir)
+
+//    String gitCmd = "git rev-list --count HEAD ^${BASE_VERSION_COMMIT_ID}"
+    String cmdResult = gitCmd.execute(null, projectDir).text
+    if (cmdResult != null || !cmdResult.isEmpty()) {
+        return Integer.valueOf(cmdResult.trim())
+    } else {
+        return -1
+    }
+}
+
+boolean isPublicBuild() { //根据分支选择性要不要混淆,只有发布版本才混淆
+    String branchName = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
+    boolean isPublicBuild = branchName == 'master'
+    println("当前构建是否发布状态: isPublicBuild: $isPublicBuild")
+    return isPublicBuild
+}
+def getPlatFormName() {
+    if (isServerBuilding()) {
+        String platform = System.getenv("BRANCH_ID")
+        printf('platformn=ame ' + platform)
+        if (platform != null) {
+            return platform
+        }
+    }
+    return "local"
+}
+def getPropertiesName() {
+    if (isServerBuilding()) {
+        String connet = System.getenv("CONNET_LINK")
+        printf('connet_link=ame ' + connet)
+        if (connet != null) {
+            return connet
+        }
+    }
+    return "general"
+}
+boolean isServerBuilding() {
+    String buildTags = System.getenv('BUILD_TAG')
+    if (null != buildTags && buildTags.contains('jenkins')) {
+        return true
+    } else {
+        return false
+    }
+}
+
+
