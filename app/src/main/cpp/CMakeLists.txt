@@ -21,7 +21,9 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        native-lib.cpp)
+        native-lib.cpp
+        log/jnilog.cpp
+        )
 
 #add_library(myTest SHARED myTest.cpp)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/myInclude/)

@@ -14,15 +14,15 @@ import com.zhengsr.cmakedemo.JniUtils
  * describe：
  */
 class Lesson_1 :BaseLesson() {
-    override fun show(context: Context) {
-        super.show(context)
-        view = TextView(context).apply {
+
+
+    override fun show(context: Context) = run {
+        TextView(context).apply {
             layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT)
             setTextColor(Color.BLACK)
             setTextSize(TypedValue.COMPLEX_UNIT_SP,24f)
             text = "两数之和: ${JniUtils.getIntValue(10,10)}"
             gravity = Gravity.CENTER
-            visibility = View.VISIBLE
         }
     }
 }

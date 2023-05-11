@@ -1,17 +1,14 @@
 package com.zhengsr.cmakedemo
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.zhengsr.cmakedemo.databinding.ActivityMainBinding
 import com.zhengsr.cmakedemo.lesson.BaseLesson
 import com.zhengsr.cmakedemo.lesson.Lesson_1
+import com.zhengsr.cmakedemo.lesson.Lesson_2
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -23,8 +20,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val data = arrayListOf<RenderItem>(
-            RenderItem(Lesson_1::class.java, "L1 - 加载so库"),
+        val data = arrayListOf<LessonItem>(
+            LessonItem(Lesson_1::class.java, "L1 - 加载so库"),
+            LessonItem(Lesson_2::class.java, "L2 - 数据类型传递"),
 
             )
         with(recycleView) {
@@ -32,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             val testAdapter = TestAdapter(data)
             testAdapter.setOnItemClickListener { adapter, view, position ->
                 curRender = getRenderer(data[position].className)?.apply {
-                    showUI(this@MainActivity)
+                    showInnerView(this@MainActivity)
                     recycleView.visibility = View.GONE
                     rootContent.addView(this.view)
                 }
@@ -55,9 +53,9 @@ class MainActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    class TestAdapter(datas:ArrayList<RenderItem>) : BaseQuickAdapter<RenderItem, BaseViewHolder>(R.layout.layout_item,datas) {
+    class TestAdapter(datas:ArrayList<LessonItem>) : BaseQuickAdapter<LessonItem, BaseViewHolder>(R.layout.layout_item,datas) {
 
-        override fun convert(holder: BaseViewHolder, item: RenderItem) {
+        override fun convert(holder: BaseViewHolder, item: LessonItem) {
             // 设置item数据
             item?.let {
                 holder.setText(R.id.item_text, it.content)
@@ -67,7 +65,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    data class RenderItem(val className: Class<*>, val content: String)
+    data class LessonItem(val className: Class<*>, val content: String)
 
     fun getRenderer(className: Class<*>): BaseLesson? {
         try {

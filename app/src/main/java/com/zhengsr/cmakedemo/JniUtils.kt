@@ -12,4 +12,6 @@ object JniUtils {
 
     external fun getTestName(): String
     external fun getIntValue(a: Int,b:Int): Int
+
+    external fun testBaseDataValue(a:Char, b:Int, c:Long, d:String, e:Float, f: Double, g:Short, h:Byte):String
 }
