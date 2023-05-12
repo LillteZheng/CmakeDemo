@@ -10,6 +10,7 @@ extern "C" {
 void logD(const char* msg,...);
 void logE(const char* msg,...);
 void logStrD(JNIEnv* env,  const char* prefix,jstring str) ;
+void logIntD(JNIEnv* env,  const char* prefix, jint i);
 #ifdef __cplusplus
 }
 #endif

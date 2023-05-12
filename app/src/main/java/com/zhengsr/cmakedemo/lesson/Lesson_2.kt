@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.zhengsr.cmakedemo.JniUtils
+import com.zhengsr.cmakedemo.Person
 
 /**
  * @author by zhengshaorui 2023/5/10
@@ -39,8 +40,19 @@ class Lesson_2 : BaseLesson() {
                 )
                 orientation = LinearLayout.VERTICAL
                 addBtn("基本数据") {
-                    val msg = JniUtils.testBaseDataValue('a',1,2L,"你好",3f,4.0,5,"6".toByte())
+                    val msg = JniUtils.testBaseDataValue('a',1,2L,3f,4.0,5,"6".toByte())
                     textView.text = msg
+                }
+                addBtn("引用数据：String，数组"){
+                    val msg = JniUtils.testArray("hello world", intArrayOf(1,2,3,4,5))
+                    textView.text = msg
+                }
+                addBtn("Jni修改Java类"){
+                    val person = Person("李四",21)
+                    val old = "修改之前:$person"
+                    JniUtils.testJniChanageJavaBean(person)
+                    val new = "\tJni修改后:$person"
+                    textView.text = "$old $new"
                 }
                 frame.addView(this)
             }
