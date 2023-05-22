@@ -11,9 +11,22 @@ object JniUtils {
     }
 
     external fun getTestName(): String
-    external fun getIntValue(a: Int,b:Int): Int
+    external fun getIntValue(a: Int, b: Int): Int
 
-    external fun testBaseDataValue(a:Char, b:Int, c:Long, e:Float, f: Double, g:Short, h:Byte):String
-    external fun testArray(string: String,intArray: IntArray):String
+    external fun testBaseDataValue(
+        a: Char,
+        b: Int,
+        c: Long,
+        e: Float,
+        f: Double,
+        g: Short,
+        h: Byte
+    ): String
+
+    external fun testArray(string: String, intArray: IntArray): String
     external fun testJniChanageJavaBean(person: Person)
+    external fun testJniJavaMethod(person: Person): String
+    external fun testThrowError(a: Int, b: Int): Int
+    external fun getStringFromC(): String
+    external fun getIntFromC(a: Int, b: Int,c:Int): Int
 }

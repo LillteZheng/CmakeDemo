@@ -54,3 +54,4 @@ extern "C" void logDoubleD(JNIEnv* env,  const char* prefix, jdouble d) {
     logD("%s %lf", prefix, d);
 }
 
+

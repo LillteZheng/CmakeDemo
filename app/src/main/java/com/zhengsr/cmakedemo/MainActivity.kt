@@ -6,9 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.zhengsr.cmakedemo.lesson.BaseLesson
-import com.zhengsr.cmakedemo.lesson.Lesson_1
-import com.zhengsr.cmakedemo.lesson.Lesson_2
+import com.zhengsr.cmakedemo.lesson.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -23,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         val data = arrayListOf<LessonItem>(
             LessonItem(Lesson_1::class.java, "L1 - 加载so库"),
             LessonItem(Lesson_2::class.java, "L2 - 数据类型传递"),
+            LessonItem(Lesson_3::class.java, "L3 - 异常处理"),
+            LessonItem(Lesson_4::class.java, "L4 - 函数动态注册"),
 
             )
         with(recycleView) {
