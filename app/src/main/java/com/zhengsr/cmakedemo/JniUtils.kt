@@ -32,6 +32,8 @@ object JniUtils {
 
     external fun timerTask(listener: OnTimerListener)
 
+    external fun testJniThread(listener: OnTimerListener)
+
     interface OnTimerListener{
         fun onTimer(count : Int)
     }

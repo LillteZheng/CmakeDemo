@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
             LessonItem(Lesson_2::class.java, "L2 - 数据类型传递"),
             LessonItem(Lesson_3::class.java, "L3 - 异常处理"),
             LessonItem(Lesson_4::class.java, "L4 - 函数动态注册"),
+            LessonItem(Lesson_5::class.java, "L5 - 线程"),
 
             )
         with(recycleView) {
