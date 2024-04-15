@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.zhengsr.cmakedemo.JniUtils
 import com.zhengsr.cmakedemo.Person
+import kotlin.concurrent.thread
 
 /**
  * @author by zhengshaorui 2023/5/10
@@ -40,8 +41,20 @@ class Lesson_4 : BaseLesson() {
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
                 orientation = LinearLayout.VERTICAL
-                addBtn("函数动态注册") {
+                addBtn("获取数值") {
                    textView.text = "通过动态注册后，拿到结果："+JniUtils.getIntFromC(1,3,5).toString()
+                }
+                addBtn("监听 Jni 变化"){
+                    thread {
+                        JniUtils.timerTask(object : JniUtils.OnTimerListener{
+                            override fun onTimer(count: Int) {
+                                textView.post {
+                                    textView.text = "当前数值：$count"
+                                }
+                            }
+                        })
+                    }
+
                 }
 
                 frame.addView(this)

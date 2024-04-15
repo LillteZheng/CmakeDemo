@@ -29,4 +29,10 @@ object JniUtils {
     external fun testThrowError(a: Int, b: Int): Int
     external fun getStringFromC(): String
     external fun getIntFromC(a: Int, b: Int,c:Int): Int
+
+    external fun timerTask(listener: OnTimerListener)
+
+    interface OnTimerListener{
+        fun onTimer(count : Int)
+    }
 }

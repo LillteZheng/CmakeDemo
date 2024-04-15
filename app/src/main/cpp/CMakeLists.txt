@@ -31,7 +31,7 @@ add_library(myTest SHARED IMPORTED)
 set_target_properties(
         myTest
         PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_CURRENT_SOURCE_DIR}/lib/armeabi-v7a/libmyTest.so
+        ${CMAKE_CURRENT_SOURCE_DIR}/lib/${CMAKE_ANDROID_ARCH_ABI}/libmyTest.so
 )
 
 

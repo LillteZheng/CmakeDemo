@@ -3,6 +3,7 @@
 
 #include "myInclude/jnilog.h"
 #include "myInclude/test.h"
+#include <unistd.h>
 
 
 extern "C"
@@ -111,10 +112,21 @@ jint returnInt(JNIEnv *env, jobject thiz,jint a,jint b,jint c) {
     return a+b+c;
 }
 
+void timeTest(JNIEnv *env, jobject thiz,jobject timeListener) {
+    jclass clsTimeListener = env->GetObjectClass(timeListener);
+    jmethodID onTime = env->GetMethodID(clsTimeListener,"onTimer","(I)V");
+    for (int i = 0; i < 10; ++i) {
+        env->CallVoidMethod(timeListener,onTime,i);
+        sleep(1);
+    }
+}
+
+
 #define METHOD_CLASS "com/zhengsr/cmakedemo/JniUtils"
 const JNINativeMethod methods[]{
       //  {"getStringFromC","()Ljava/lang/String;", (void *) returnString},
-        {"getIntFromC","(III)I", (void *) returnInt}
+        {"getIntFromC","(III)I", (void *) returnInt},
+        {"timerTask","(Lcom/zhengsr/cmakedemo/JniUtils$OnTimerListener;)V", (void *) timeTest}
 };
 
 
