@@ -11,6 +11,7 @@ void logD(const char* msg,...);
 void logE(const char* msg,...);
 void logStrD(JNIEnv* env,  const char* prefix,jstring str) ;
 void logIntD(JNIEnv* env,  const char* prefix, jint i);
+void logObjD(JNIEnv* env,  const char* prefix,jobject obj);
 #ifdef __cplusplus
 }
 #endif

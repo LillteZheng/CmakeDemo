@@ -25,6 +25,13 @@ extern "C" void logStrD(JNIEnv* env,  const char* prefix,jstring str) {
     logD("%s %s", prefix, c_str);
     env->ReleaseStringUTFChars(str, c_str);
 }
+extern "C" void logObjD(JNIEnv* env,  const char* prefix,jobject obj) {
+    jclass cls = env->GetObjectClass(obj);
+    jmethodID jmethodId = env->GetMethodID(cls, "toString", "()Ljava/lang/String;");
+    jstring  str = (jstring) env->CallObjectMethod(obj, jmethodId);
+    logStrD(env, prefix, str);
+
+}
 
 extern "C" void logShortD(JNIEnv* env,  const char* prefix, jshort s) {
     logD("%s %hd", prefix, s);
@@ -53,5 +60,6 @@ extern "C" void logFloatD(JNIEnv* env,  const char* prefix, jfloat f) {
 extern "C" void logDoubleD(JNIEnv* env,  const char* prefix, jdouble d) {
     logD("%s %lf", prefix, d);
 }
+
 
 
