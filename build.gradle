@@ -37,17 +37,9 @@ allprojects {
 
         maven { url 'https://jitpack.io' }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }// 阿里云maven镜像
-        maven { url 'https://artifactory.gz.cvte.cn/artifactory/SR_maven_releases_local/' }
-        maven { url 'https://mvn.gz.cvte.cn/nexus/content/repositories/releases/' }
-        maven { url 'https://mvn.gz.cvte.cn/nexus/content/repositories/snapshots/' }
-        maven { url 'https://artifactory.gz.cvte.cn/artifactory/mvn-snapshots' }
-        maven { url 'https://artifactory.gz.cvte.cn/artifactory/mvn-releases' }
-        maven { url "https://mvn.gz.cvte.cn/nexus/content/repositories/android_snapshots/" }
-        maven { url "https://mvn.gz.cvte.cn/nexus/content/repositories/android_releases/" }
         maven { url 'https://maven.aliyun.com/repository/public' }
         maven { url 'https://maven.aliyun.com/repository/central' }
         maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url "http://objectbox.net/beta-repo/" }
         maven { url 'https://maven.google.com' }
         mavenLocal()
         mavenCentral()
